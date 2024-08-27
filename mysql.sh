@@ -14,7 +14,7 @@ N="\e[0m"
 
 CHECK_ROOT()
 {
-    if [ USERID -ne 0 ]
+    if [ $USERID -ne 0 ]
     then
     echo -e "$R Please run the script with root priveleges $N" | tee -a $>>LoG_FILE
     exit 1
