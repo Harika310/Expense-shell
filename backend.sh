@@ -69,8 +69,8 @@ VALIDATE $? "Extracting backend application code"
 
 npm install &>>$LOG_FILE  #installing dependencies 
 
- cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
-
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
+VALIDATE $? "Copied expense conf"
 # load the data before running backend 
 dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "Installing mysql client" 
