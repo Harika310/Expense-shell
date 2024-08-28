@@ -36,21 +36,14 @@ echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-dnf install mysql-server -y &>>$LOG_FILE
-VALIDATE $? "Installing MySQL Server" 
+dnf module disable nodejs -y  &>>LOG_FILE
+VALIDATE $? "disable default nodejs"
 
-systemctl enable mysqld &>>$LOG_FILE
-VALIDATE $? "Enabled MySQL Server" 
+dnf module enable nodejs:20 -y  &>>LOG_FILE
+VALIDATE $? "enable nodejs:20"
 
-systemctl start mysqld &>>$LOG_FILE
-VALIDATE $? "Started MySQL server" 
+dnf install nodejs -y  &>>LOG_FILE
+VALIDATE $? "Installing nodejs"
 
-mysql -h mysql.daws-81s.online -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
-if [ $? -ne 0 ]
-then
-echo "MYSQL root password is not setup..setting up now" &>>$LoG_FILE
-mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATE $? "setting up root password"
-else
-echo "MYSQL root password is already setup..skipping" | tee -a $LoG_FILE
-fi
+useradd expense
+
