@@ -71,4 +71,22 @@ npm install &>>$LOG_FILE  #installing dependencies
 
  cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
 
+# load the data before running backend 
+dnf install mysql -y  &>>$LOG_FILE
+VALIDATE $? "Installing mysql client" 
+
+mysql -h mysql.daws-81s.online -uroot -pExpenseApp@1 < /app/schema/backend.sql  &>>$LOG_FILE
+VALIDATE $? "schema loading"
+
+systemctl daemon-reload  &>>$LOG_FILE
+VALIDATE $? "daemon reload"
+
+systemctl enable backend  &>>$LOG_FILE
+VALIDATE $? "enabled backend" 
+
+systemctl restart backend  &>>$LOG_FILE
+VALIDATE $? "Restarted backend"
+
+
+
 
