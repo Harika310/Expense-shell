@@ -49,7 +49,7 @@ id expense &>>$LOG_FILE
 if [ $? -ne 0 ] 
 then 
 echo -e "expense user not exist..$G creating $N"
-useradd expense
+useradd expense &>>$LOG_FILE
 VALIDATE $? "Creating expense user"
 else
 echo -e "expense user already exists...$Y skipping $N"
@@ -67,8 +67,8 @@ rm -rf /app/* #remove the existing code
 unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "Extracting backend application code"
 
-npm install &>>$LOG_FILE
+# npm install &>>$LOG_FILE
 
- cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
+#  cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
 
 
